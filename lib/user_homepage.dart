@@ -22,7 +22,7 @@ class Homepage extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          UserPost())); //replace with posts screen
+                          UserpostCopyWidget())); //replace with posts screen
             },
             icon: Icon(Icons.post_add),
             iconSize: 36,

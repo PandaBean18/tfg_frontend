@@ -40,6 +40,8 @@ dependencies:
   geolocator: any
   geocoding: ^2.0.4
   google_fonts: ^2.2.0
+  auto_size_text: ^3.0.0
+  font_awesome_flutter: ^10.3.0
 
 dev_dependencies:
   flutter_test:

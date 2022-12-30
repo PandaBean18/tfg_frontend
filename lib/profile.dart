@@ -68,14 +68,14 @@ class _ProfileState extends State<Profile> {
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: 50,
-                    child: const Text(
+                    child: Text(
                       'Name',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
+                      style: GoogleFonts.getFont(
+                        'Montserrat',
                         color: Color(0xFF492727),
                         fontSize: 35,
-                        //fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
