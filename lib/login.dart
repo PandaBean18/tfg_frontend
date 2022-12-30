@@ -3,19 +3,27 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../admin_homepage.dart';
 import '../user_homepage.dart';
+import '../profile.dart';
 //* Login page starts from here. Point to be noted here is
 //* once the user enters password for login, user will be checked if it is admin or not,
 //* If the user is an admin and the password given is correct, then AdminHomePage will load
 //* Else the user is a normal user and the password given is correct, then HomePage will load.
 
 void _adminhomepage(BuildContext context) {
-  Navigator.pushReplacement(
+  Navigator.push(
       context, MaterialPageRoute(builder: (context) => AdminHomepage()));
 }
 
 void _homepage(BuildContext context) {
-  Navigator.pushReplacement(
-      context, MaterialPageRoute(builder: (context) => Homepage()));
+  Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage()));
+}
+
+void _profilepage(BuildContext context) {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
+}
+
+void _login(BuildContext context) {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
 }
 
 void loginalert(BuildContext context) {
@@ -24,7 +32,7 @@ void loginalert(BuildContext context) {
     content: const Text('Username or Password was incorrect'),
     actions: [
       TextButton(
-        onPressed: () => Navigator.pop(context),
+        onPressed: () => _login(context),
         child: const Text('Retry'),
       )
     ],
@@ -113,6 +121,7 @@ class Login extends StatelessWidget {
                 child: TextFormField(
                   controller: loginpassController,
                   textAlign: TextAlign.left,
+                  obscureText: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderSide:
@@ -123,45 +132,51 @@ class Login extends StatelessWidget {
               ),
               TextButton(
                   onPressed: () async {
-                    var url = Uri.parse(
-                        'https://daybreaklimit.herokuapp.com/auth/login');
-
-                    var response = await http.post(url, body: {
-                      'user[username]': loginuserController.text,
-                      'user[password]': loginpassController.text,
-                    });
-
-                    if (response.statusCode == 200) {
-                      var decResponse = jsonDecode(response.body);
-                      var tokenvalue = decResponse['token'];
-                      var refreshtokenvalue = decResponse['refresh_token'];
-                      print(tokenvalue);
-                      print(refreshtokenvalue);
-
-                      var authurl = Uri.parse(
-                          'https://daybreaklimit.herokuapp.com/users/me');
-
-                      var authresponse = await http.get(authurl,
-                          headers: {"Authorization": "$tokenvalue"});
-
-                      if (authresponse.statusCode == 200) {
-                        var authadmin = jsonDecode(authresponse.body);
-                        var user = authadmin['user'];
-                        var authuser = user['admin'];
-                        print(authuser);
-
-                        if (authuser == true) {
-                          return _adminhomepage(context);
-                        } else {
-                          return _homepage(context);
-                        }
-                      }
-                      print(authresponse.body);
-                    }
-                    if (response.statusCode == 401) {
-                      print(response.body);
+                    if (loginuserController.text.trim() == 'Raghav123' &&
+                        loginpassController.text.trim() == 'Password') {
+                      return _profilepage(context);
+                    } else {
                       return loginalert(context);
                     }
+                    // var url = Uri.parse(
+                    //     'https://daybreaklimit.herokuapp.com/auth/login');
+
+                    // var response = await http.post(url, body: {
+                    //   'user[username]': loginuserController.text,
+                    //   'user[password]': loginpassController.text,
+                    // });
+
+                    // if (response.statusCode == 200) {
+                    //   var decResponse = jsonDecode(response.body);
+                    //   var tokenvalue = decResponse['token'];
+                    //   var refreshtokenvalue = decResponse['refresh_token'];
+                    //   print(tokenvalue);
+                    //   print(refreshtokenvalue);
+
+                    //   var authurl = Uri.parse(
+                    //       'https://daybreaklimit.herokuapp.com/users/me');
+
+                    //   var authresponse = await http.get(authurl,
+                    //       headers: {"Authorization": "$tokenvalue"});
+
+                    //   if (authresponse.statusCode == 200) {
+                    //     var authadmin = jsonDecode(authresponse.body);
+                    //     var user = authadmin['user'];
+                    //     var authuser = user['admin'];
+                    //     print(authuser);
+
+                    //     if (authuser == true) {
+                    //       return _adminhomepage(context);
+                    //     } else {
+                    //       return _homepage(context);
+                    //     }
+                    //   }
+                    //   print(authresponse.body);
+                    // }
+                    // if (response.statusCode == 401) {
+                    //   print(response.body);
+                    //   return loginalert(context);
+                    // }
                   },
                   child: Container(
                     alignment: Alignment.center,

@@ -3,6 +3,10 @@ import 'package:http/http.dart' as http;
 import '../user_post.dart';
 import '../profile.dart';
 
+void _userhomepage(BuildContext context) {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage()));
+}
+
 //? Home Page
 class Homepage extends StatelessWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -14,7 +18,7 @@ class Homepage extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             onPressed: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
@@ -54,14 +58,18 @@ class Homepage extends StatelessWidget {
               iconSize: 36,
             ),
             IconButton(
-              onPressed: null,
+              onPressed: () {
+                if (true) {
+                  return _userhomepage(context);
+                }
+              },
               icon: Icon(Icons.home_filled),
               tooltip: 'Home',
               iconSize: 36,
             ),
             IconButton(
               onPressed: () {
-                Navigator.pushReplacement(context,
+                Navigator.push(context,
                     MaterialPageRoute(builder: (context) => Profile()));
               },
               icon: Icon(Icons.person),

@@ -46,7 +46,7 @@ class SignIn extends StatelessWidget {
           shadowColor: Colors.black,
           elevation: 20,
           child: Container(
-            width: 350,
+            width: 360,
             height: 600,
             decoration: BoxDecoration(
                 color: Color.fromRGBO(228, 205, 205, 0.75),

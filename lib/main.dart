@@ -9,7 +9,7 @@ import '../signup.dart';
 import '../admin_homepage.dart';
 import '../admin_post.dart';
 import '../user_post.dart';
-import '../tmp.dart';
+import '../profile.dart';
 
 void main() => {
       SystemChrome.setSystemUIOverlayStyle(
@@ -100,8 +100,7 @@ class LogInSignIn extends StatelessWidget {
                 image: NetworkImage(
                     'https://cdn.discordapp.com/attachments/1033448117703561326/1033448248385478738/AppBackground.png'),
                 fit: BoxFit.cover)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+        child: ListView(
           children: [
             Container(
               constraints: BoxConstraints.tight(Size(300, 300)),
@@ -144,7 +143,7 @@ class LogInSignIn extends StatelessWidget {
                           onPressed: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              return Profile();
+                              return Login();
                             }));
                           },
                           child: Text(
