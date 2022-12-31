@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
 import '../flutter_flow_widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -7,6 +8,7 @@ import 'package:geolocator/geolocator.dart';
 import '../profile.dart';
 import '../user_homepage.dart';
 import 'dart:io';
+import 'package:url_launcher/url_launcher.dart';
 
 void _profile(BuildContext context) {
   Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
@@ -38,6 +40,54 @@ class _UserpostCopyWidgetState extends State<UserpostCopyWidget> {
     color: Color(0xFFA45B5B),
     size: 32,
   );
+  String position_button_text = 'Use my location';
+  double? latitude;
+  double? longitude;
+
+  Future<bool> _handleLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content:
+            Text('Location services are disabled. Please enable the services.'),
+      ));
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Location permissions are denied')));
+        return false;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location permissions are permanently denied, we cannot request permissions.')));
+      return false;
+    }
+    return true;
+  }
+
+  Future<void> _getCurrentPosition() async {
+    final hasPermission = await _handleLocationPermission();
+
+    if (!hasPermission) return;
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) {
+      setState(() {
+        latitude = position.latitude;
+        longitude = position.longitude;
+      });
+    }).catchError((e) {
+      debugPrint(e);
+    });
+  }
 
   @override
   void initState() {
@@ -106,14 +156,17 @@ class _UserpostCopyWidgetState extends State<UserpostCopyWidget> {
                                 image = await picker.pickImage(
                                     source: ImageSource.gallery);
                                 setState(() {
-                                  selected_image =
-                                      image?.path.split("/").last.toString();
-                                  image_picker_fontsize = 9;
-                                  image_picker_icon = Icon(
-                                    Icons.add_task_rounded,
-                                    color: Color(0xFFA45B5B),
-                                    size: 32,
-                                  );
+                                  if (image != null) {
+                                    selected_image =
+                                        image?.path.split("/").last.toString();
+                                    image_picker_fontsize = 9;
+                                    image_picker_icon = Icon(
+                                      Icons.add_task_rounded,
+                                      color: Color(0xFFA45B5B),
+                                      size: 32,
+                                    );
+                                  }
+                                  ;
                                 });
                               },
                               text: selected_image != null
@@ -307,7 +360,94 @@ class _UserpostCopyWidgetState extends State<UserpostCopyWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0, -0.8),
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                    margin: EdgeInsets.all(15),
+                    child: TextButton(
+                      onPressed: () {
+                        return;
+                      },
+                      child: InkWell(
+                        onTap: () async {
+                          if (latitude == null) {
+                            await _getCurrentPosition();
+                            setState(() {
+                              position_button_text =
+                                  "Lat: $latitude Long: $longitude";
+                            });
+                          } else {
+                            launchUrl(Uri.parse(
+                                "https://google.com/maps/search/?api=1&query=$latitude,$longitude"));
+                          }
+                        },
+                        child: Container(
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+                          decoration: BoxDecoration(
+                              color: Color(0xFFAD8873),
+                              border: Border(
+                                  top: BorderSide(
+                                      color: Colors.transparent, width: 1),
+                                  bottom: BorderSide(
+                                      color: Colors.transparent, width: 1),
+                                  left: BorderSide(
+                                      color: Colors.transparent, width: 1),
+                                  right: BorderSide(
+                                      color: Colors.transparent, width: 1)),
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black,
+                                    blurRadius: 0.1,
+                                    spreadRadius: 0.1)
+                              ]),
+                          child: Text(
+                            (latitude == null ||
+                                    position_button_text ==
+                                        "Lat: null Long: null")
+                                ? "Use my location"
+                                : "Location selected. Tap to view",
+                            style: GoogleFonts.getFont(
+                              'Poppins',
+                              color: Color(0xFF492727),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                    // FFButtonWidget(
+                    //   onPressed: () async {
+                    //     await _getCurrentPosition();
+                    //     setState(() {
+                    //       position_button_text =
+                    //           "Lat: $latitude Long: $longitude";
+                    //       debugPrint("$latitude");
+                    //     });
+                    //   },
+                    //   text: (position_button_text == null ||
+                    //           position_button_text == "Lat: null Long: null")
+                    //       ? "Use my location"
+                    //       : position_button_text,
+                    //   options: FFButtonOptions(
+                    //     padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+                    //     color: Color(0xFFAD8873),
+                    //     textStyle: GoogleFonts.getFont(
+                    //       'Poppins',
+                    //       color: Color(0xFF492727),
+                    //       fontWeight: FontWeight.w500,
+                    //     ),
+                    //     borderSide: BorderSide(
+                    //       color: Colors.transparent,
+                    //       width: 1,
+                    //     ),
+                    //     borderRadius: 30,
+                    //   ),
+                    // )
+                    ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
                 child: FFButtonWidget(
                   onPressed: () {
                     // add code to make post req

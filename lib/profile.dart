@@ -92,7 +92,7 @@ class _ProfileState extends State<Profile> {
                     width: MediaQuery.of(context).size.width,
                     height: 50,
                     child: Text(
-                      'GortOnHelpingHands',
+                      'CapybaraGort',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.getFont(
                         'Montserrat',
