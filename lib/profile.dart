@@ -55,13 +55,19 @@ class _ProfileState extends State<Profile> {
                   top: 105.5,
                   left: (MediaQuery.of(context).size.width / 2) - 70,
                   child: Container(
-                    width: 140,
-                    height: 140,
-                    decoration: BoxDecoration(
-                      color: const Color(0xff4B39EF),
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                  ),
+                      width: 140,
+                      height: 140,
+                      decoration: BoxDecoration(
+                        color: const Color(0xff4B39EF),
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Image.network(
+                            'https://cdn.discordapp.com/attachments/985120658193252413/1058709365521137674/capybara-square-1.jpg.optimal.jpg',
+                            height: 140,
+                            width: 140,
+                          ))),
                 ),
                 Positioned(
                   top: 250,
@@ -69,7 +75,7 @@ class _ProfileState extends State<Profile> {
                     width: MediaQuery.of(context).size.width,
                     height: 50,
                     child: Text(
-                      'Name',
+                      'Gort',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.getFont(
                         'Montserrat',
@@ -85,13 +91,13 @@ class _ProfileState extends State<Profile> {
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: 50,
-                    child: const Text(
-                      'Username',
+                    child: Text(
+                      'GortOnHelpingHands',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
+                      style: GoogleFonts.getFont(
+                        'Montserrat',
                         color: Colors.black,
-                        fontSize: 20,
+                        fontSize: 14,
                       ),
                     ),
                   ),
@@ -121,14 +127,14 @@ class _ProfileState extends State<Profile> {
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     fontFamily: 'Montserrat',
-                                    color: Colors.black,
+                                    color: Color(0xFF492727),
                                   ),
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(15),
                                 child: Text(
-                                  'usermail@gmail.com',
+                                  'capybaragort@gmail.com',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     fontFamily: 'Montserrat',
@@ -166,7 +172,7 @@ class _ProfileState extends State<Profile> {
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     fontFamily: 'Montserrat',
-                                    color: Colors.black,
+                                    color: Color(0xFF492727),
                                   ),
                                 ),
                               ),
