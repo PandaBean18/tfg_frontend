@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import '../flutter_flow_widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -370,10 +370,17 @@ class _UserpostCopyWidgetState extends State<UserpostCopyWidget> {
                       child: InkWell(
                         onTap: () async {
                           if (latitude == null) {
+                            setState(() {
+                              position_button_text = "Getting location...";
+                            });
                             await _getCurrentPosition();
                             setState(() {
-                              position_button_text =
-                                  "Lat: $latitude Long: $longitude";
+                              if (latitude != null) {
+                                position_button_text =
+                                    "Location selected. Tap to view";
+                              } else {
+                                position_button_text = "Use my location";
+                              }
                             });
                           } else {
                             launchUrl(Uri.parse(
@@ -402,11 +409,7 @@ class _UserpostCopyWidgetState extends State<UserpostCopyWidget> {
                                     spreadRadius: 0.1)
                               ]),
                           child: Text(
-                            (latitude == null ||
-                                    position_button_text ==
-                                        "Lat: null Long: null")
-                                ? "Use my location"
-                                : "Location selected. Tap to view",
+                            position_button_text,
                             style: GoogleFonts.getFont(
                               'Poppins',
                               color: Color(0xFF492727),
@@ -415,44 +418,15 @@ class _UserpostCopyWidgetState extends State<UserpostCopyWidget> {
                           ),
                         ),
                       ),
-                    )
-                    // FFButtonWidget(
-                    //   onPressed: () async {
-                    //     await _getCurrentPosition();
-                    //     setState(() {
-                    //       position_button_text =
-                    //           "Lat: $latitude Long: $longitude";
-                    //       debugPrint("$latitude");
-                    //     });
-                    //   },
-                    //   text: (position_button_text == null ||
-                    //           position_button_text == "Lat: null Long: null")
-                    //       ? "Use my location"
-                    //       : position_button_text,
-                    //   options: FFButtonOptions(
-                    //     padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
-                    //     color: Color(0xFFAD8873),
-                    //     textStyle: GoogleFonts.getFont(
-                    //       'Poppins',
-                    //       color: Color(0xFF492727),
-                    //       fontWeight: FontWeight.w500,
-                    //     ),
-                    //     borderSide: BorderSide(
-                    //       color: Colors.transparent,
-                    //       width: 1,
-                    //     ),
-                    //     borderRadius: 30,
-                    //   ),
-                    // )
-                    ),
+                    )),
               ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: FFButtonWidget(
                   onPressed: () {
-                    // add code to make post req
+                    // code to post
                   },
-                  text: 'Create Post',
+                  text: "Create post",
                   options: FFButtonOptions(
                     padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
                     color: Color(0xFFAD8873),
