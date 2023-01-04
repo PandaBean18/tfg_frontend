@@ -112,23 +112,12 @@ class _UserpostCopyWidgetState extends State<UserpostCopyWidget> {
         key: scaffoldKey,
         backgroundColor: Color(0xFFE4CDCD),
         appBar: AppBar(
-          backgroundColor: Color(0xFF492727),
-          automaticallyImplyLeading: false,
-          title: Align(
-            alignment: AlignmentDirectional(0, -0.45),
-            child: Text(
-              'Create Post',
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                color: Color(0xFFEDCDCD),
-                fontSize: 22,
-                fontWeight: FontWeight.w300,
-              ),
-            ),
-          ),
-          actions: [],
-          centerTitle: false,
-          elevation: 10,
+          title: Text('Create Post'),
+          centerTitle: true,
+          backgroundColor: Color(0xff492727),
+          foregroundColor: Color(0xFFEDCDCD),
+          shadowColor: Colors.black,
+          elevation: 20,
         ),
         body: Column(children: [
           Expanded(

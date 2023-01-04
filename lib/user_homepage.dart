@@ -1,8 +1,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tfg_app/individual_user_post.dart';
 import '../user_post.dart';
 import '../profile.dart';
+import '../individual_user_post.dart';
+
+void _post(BuildContext context, int post_id) {
+  Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => InduvidualpostWidget(post_id: post_id)));
+}
 
 void _profile(BuildContext context) {
   Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
@@ -65,195 +74,81 @@ class _HomepageState extends State<Homepage> {
                 Expanded(
                     child: ListView(children: [
                   for (int i = 0; i < 4; i++)
-                    Column(mainAxisSize: MainAxisSize.min, children: [
-                      Container(
-                        height: 10,
-                      ),
-                      Container(
-                          alignment: Alignment.topCenter,
-                          child: Container(
-                            child: Align(
-                              alignment: Alignment.topCenter,
-                              child: Image.network(
-                                'https://picsum.photos/seed/605/600',
-                                width: MediaQuery.of(context).size.width,
-                                height: 150,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          )),
-                      Container(
-                        alignment: Alignment.topCenter,
-                        height: 160,
-                        child: Container(
-                          child: Align(
+                    InkWell(
+                        onTap: () {
+                          _post(context, i + 1);
+                        },
+                        child:
+                            Column(mainAxisSize: MainAxisSize.min, children: [
+                          Container(
+                            height: 10,
+                          ),
+                          Container(
                               alignment: Alignment.topCenter,
                               child: Container(
-                                width: 600,
-                                height: 150,
-                                decoration: BoxDecoration(
-                                  color: Color(0x50FFFFFF),
-                                  borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(50),
-                                    bottomRight: Radius.circular(5),
-                                    topLeft: Radius.circular(0),
-                                    topRight: Radius.circular(0),
+                                child: Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Image.network(
+                                    'https://picsum.photos/seed/605/600',
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 150,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                        margin: EdgeInsets.all(10),
-                                        child: Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text(
-                                            'Heading',
-                                            style: GoogleFonts.getFont(
-                                              'Montserrat',
-                                              color: Color(0xFFA45B5B),
-                                              fontSize: 29,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        )),
-                                    Container(
-                                        margin: EdgeInsets.all(10),
-                                        child: Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            'Description',
-                                            style: GoogleFonts.getFont(
-                                              'Poppins',
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                          ),
-                                        )),
-                                  ],
-                                ),
                               )),
-                        ),
-                      ),
-                    ])
-
-                  // Expanded(
-                  //   child: Align(
-                  //     alignment: AlignmentDirectional(0, -6.88),
-                  //     child: Image.network(
-                  //       'https://picsum.photos/seed/605/600',
-                  //       width: 600,
-                  //       height: 200,
-                  //       fit: BoxFit.cover,
-                  //     ),
-                  //   ),
-                  // ),
-                  // Expanded(
-                  //   child: Align(
-                  //     alignment: AlignmentDirectional(0, -3.05),
-                  //     child: Container(
-                  //       width: 600,
-                  //       height: 150,
-                  //       decoration: BoxDecoration(
-                  //         color: Color(0x50FFFFFF),
-                  //         borderRadius: BorderRadius.only(
-                  //           bottomLeft: Radius.circular(50),
-                  //           bottomRight: Radius.circular(5),
-                  //           topLeft: Radius.circular(0),
-                  //           topRight: Radius.circular(0),
-                  //         ),
-                  //       ),
-                  //       child: Align(
-                  //         alignment: AlignmentDirectional(0, 0.1),
-                  //         child: Stack(
-                  //           children: [
-                  //             Align(
-                  //               alignment: AlignmentDirectional(-0.9, -0.3),
-                  //               child: Text(
-                  //                 'Heading',
-                  //                 style: GoogleFonts.getFont(
-                  //                   'Montserrat',
-                  //                   color: Color(0xFFA45B5B),
-                  //                   fontSize: 29,
-                  //                   fontWeight: FontWeight.bold,
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //             Align(
-                  //               alignment: AlignmentDirectional(-0.9, 0.15),
-                  //               child: Text(
-                  //                 'description',
-                  //                 style: GoogleFonts.getFont(
-                  //                   'Poppins',
-                  //                   fontSize: 16,
-                  //                   fontWeight: FontWeight.normal,
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  // Expanded(
-                  //   child: Align(
-                  //     alignment: AlignmentDirectional(0, -6.88),
-                  //     child: Image.network(
-                  //       'https://picsum.photos/seed/605/600',
-                  //       width: 600,
-                  //       height: 200,
-                  //       fit: BoxFit.cover,
-                  //     ),
-                  //   ),
-                  // ),
-                  // Expanded(
-                  //   child: Align(
-                  //     alignment: AlignmentDirectional(0, -3.05),
-                  //     child: Container(
-                  //       width: 600,
-                  //       height: 150,
-                  //       decoration: BoxDecoration(
-                  //         color: Color(0x50FFFFFF),
-                  //         borderRadius: BorderRadius.only(
-                  //           bottomLeft: Radius.circular(50),
-                  //           bottomRight: Radius.circular(5),
-                  //           topLeft: Radius.circular(0),
-                  //           topRight: Radius.circular(0),
-                  //         ),
-                  //       ),
-                  //       child: Align(
-                  //         alignment: AlignmentDirectional(0, 0.1),
-                  //         child: Stack(
-                  //           children: [
-                  //             Align(
-                  //               alignment: AlignmentDirectional(-0.9, -0.3),
-                  //               child: Text(
-                  //                 'Heading',
-                  //                 style: GoogleFonts.getFont(
-                  //                   'Montserrat',
-                  //                   color: Color(0xFFA45B5B),
-                  //                   fontSize: 29,
-                  //                   fontWeight: FontWeight.bold,
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //             Align(
-                  //               alignment: AlignmentDirectional(-0.9, 0.15),
-                  //               child: Text(
-                  //                 'description',
-                  //                 style: GoogleFonts.getFont(
-                  //                   'Poppins',
-                  //                   fontSize: 16,
-                  //                   fontWeight: FontWeight.normal,
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // )
+                          Container(
+                            alignment: Alignment.topCenter,
+                            height: 160,
+                            child: Container(
+                              child: Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Container(
+                                    width: 600,
+                                    height: 150,
+                                    decoration: BoxDecoration(
+                                      color: Color(0x50FFFFFF),
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(50),
+                                        bottomRight: Radius.circular(5),
+                                        topLeft: Radius.circular(0),
+                                        topRight: Radius.circular(0),
+                                      ),
+                                    ),
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                            margin: EdgeInsets.all(10),
+                                            child: Align(
+                                              alignment: Alignment.topLeft,
+                                              child: Text(
+                                                'Heading ${i + 1}',
+                                                style: GoogleFonts.getFont(
+                                                  'Montserrat',
+                                                  color: Color(0xFFA45B5B),
+                                                  fontSize: 29,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            )),
+                                        Container(
+                                            margin: EdgeInsets.all(10),
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                'Description',
+                                                style: GoogleFonts.getFont(
+                                                  'Poppins',
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                              ),
+                                            )),
+                                      ],
+                                    ),
+                                  )),
+                            ),
+                          ),
+                        ]))
                 ]))
               ],
             ),

@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tfg_app/user_homepage.dart';
+import '../individual_user_post.dart';
+
+void _post(BuildContext context, int post_id) {
+  Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => InduvidualpostWidget(post_id: post_id)));
+}
 
 void _profile(BuildContext context) {
   Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
@@ -218,17 +226,36 @@ class _ProfileState extends State<Profile> {
                       child: ListView(
                         children: [
                           for (int i = 0; i < 3; i++)
-                            Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Container(
-                                  height: 100,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.5,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFF6F0F0),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                )),
+                            InkWell(
+                                onTap: () {
+                                  _post(context, i + 1);
+                                },
+                                child: Padding(
+                                    padding: EdgeInsets.all(15),
+                                    child: Container(
+                                      height: 100,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.5,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFF6F0F0),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: Container(
+                                          alignment: Alignment.center,
+                                          margin:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  20, 20, 20, 20),
+                                          child: Text(
+                                            'Heading ${i + 1}',
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.getFont(
+                                              'Montserrat',
+                                              color: Color(0xA6492727),
+                                              fontSize: 30,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                          )),
+                                    ))),
                         ],
                       ),
                     ))
